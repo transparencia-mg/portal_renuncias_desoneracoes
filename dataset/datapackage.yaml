@@ -16,7 +16,7 @@ resources:
         - name: ano
           type: string
         - name: regionalizacao
-          type: texto
+          type: string
         - name: tributo
           type: texto
         - name: modalidade
@@ -42,7 +42,7 @@ resources:
         - name: tipo
           type: texto
         - name: regionalizacao
-          type: texto
+          type: string
         - name: icms_isencao_base_calculo
           type: string
         - name: icms_reducao_aliquota
