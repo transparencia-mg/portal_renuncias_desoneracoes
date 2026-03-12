@@ -1,11 +1,10 @@
 {
   "version": "4.16.6",
-  "time": 0.065,
+  "time": 0.077,
   "errors": [],
   "tasks": [
     {
       "resource": {
-        "description": "Insira a descrição/explicação detalhada deste recurso.",
         "dialect": {
           "delimiter": ";"
         },
@@ -44,7 +43,7 @@
           ]
         },
         "scheme": "file",
-        "title": "Insira um título humanamente legível para este recurso.",
+        "title": "Previsão Renúncias Novas",
         "stats": {
           "hash": "4959fa93c4e0d479dbb75a58c1ddc875",
           "bytes": 4701,
@@ -52,7 +51,7 @@
           "rows": 59
         }
       },
-      "time": 0.009,
+      "time": 0.012,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -82,7 +81,6 @@
     },
     {
       "resource": {
-        "description": "Insira a descrição/explicação detalhada deste recurso.",
         "dialect": {
           "delimiter": ";"
         },
@@ -153,7 +151,7 @@
           ]
         },
         "scheme": "file",
-        "title": "Insira um título humanamente legível para este recurso.",
+        "title": "Previsão Renúncias Pré Existentes",
         "stats": {
           "hash": "58f7b7d96c2b601db62209b5f8521504",
           "bytes": 9538,
@@ -161,7 +159,7 @@
           "rows": 84
         }
       },
-      "time": 0.019,
+      "time": 0.022,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -191,7 +189,6 @@
     },
     {
       "resource": {
-        "description": "Insira a descrição/explicação detalhada deste recurso.",
         "dialect": {
           "delimiter": ";"
         },
@@ -230,7 +227,7 @@
           ]
         },
         "scheme": "file",
-        "title": "Insira um título humanamente legível para este recurso.",
+        "title": "Renúncias Concedidas",
         "stats": {
           "hash": "12fbb002938b7835924c88f712d35508",
           "bytes": 7859,
@@ -238,7 +235,7 @@
           "rows": 63
         }
       },
-      "time": 0.011,
+      "time": 0.013,
       "scope": [
         "hash-count-error",
         "byte-count-error",
