@@ -379,6 +379,40 @@
             margin-top: 2px;
         }
 
+/* ==================== CORREÇÕES PARA IFRAME ==================== */
+html, body {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    margin: 0;
+    padding: 0;
+}
+
+.main-container {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+}
+
+.tab-content, .tab-pane {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+}
+
+.table-fixed-header-container {
+    max-height: 500px;
+    overflow-y: auto !important; /* Manter scroll interno da tabela */
+    position: relative;
+}
+
+/* Garantir que elementos flutuantes não cortem o conteúdo */
+.container, .container-fluid {
+    overflow: visible !important;
+    height: auto !important;
+}
+
         /* ==================== AÇÕES ==================== */
         .actions-container {
             background: white; border-radius: 10px; padding: 15px 20px; margin-bottom: 20px;
@@ -1153,6 +1187,168 @@
         function formatarMoeda(v) { 
             return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v); 
         }
+
+// ==================== FUNÇÕES DE SCROLL E IFRAME CORRIGIDAS ====================
+function removeAllScrollIssues() {
+    console.log('Ajustando problemas de scroll...');
+    
+    // Não forçar overflow visible em todos os elementos
+    // Apenas garantir que o body e html tenham altura automática
+    document.documentElement.style.height = 'auto';
+    document.body.style.height = 'auto';
+    document.documentElement.style.overflowY = 'auto';
+    document.body.style.overflowY = 'auto';
+    
+    // Garantir que o container principal não bloqueie o scroll
+    const mainContainer = document.querySelector('.main-container');
+    if (mainContainer) {
+        mainContainer.style.overflowY = 'visible';
+        mainContainer.style.height = 'auto';
+        mainContainer.style.minHeight = 'auto';
+    }
+    
+    // Remover classes que possam estar causando problemas
+    document.body.classList.remove('overflow-hidden', 'overflow-auto');
+    document.documentElement.classList.remove('overflow-hidden', 'overflow-auto');
+}
+
+function iframeUpdateHeight() {
+    console.log('Atualizando altura do iframe...');
+    
+    // Pequeno delay para garantir que o DOM foi atualizado
+    setTimeout(() => {
+        // Calcular a altura real do conteúdo
+        const body = document.body;
+        const html = document.documentElement;
+        
+        // Obter a altura real considerando todos os elementos
+        const alturaConteudo = Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.scrollHeight,
+            html.offsetHeight,
+            document.querySelector('.main-container')?.scrollHeight || 0
+        );
+        
+        // Adicionar uma margem de segurança
+        const alturaFinal = alturaConteudo + 20;
+        
+        console.log('Altura calculada:', alturaFinal, 'px');
+        
+        // Enviar para o parent (iframe)
+        try {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ 
+                    iframeHeight: alturaFinal,
+                    type: 'resize-iframe'
+                }, '*');
+            }
+        } catch (error) {
+            console.log('Não está em iframe ou erro ao enviar mensagem:', error);
+        }
+        
+        return alturaFinal;
+    }, 100); // Pequeno delay para garantir renderização
+}
+
+// Função para observar mudanças no DOM e atualizar altura
+function observarMudancas() {
+    // Criar um observer para monitorar mudanças no DOM
+    const observer = new MutationObserver((mutations) => {
+        // Debounce para não chamar muitas vezes
+        clearTimeout(window.resizeTimeout);
+        window.resizeTimeout = setTimeout(() => {
+            iframeUpdateHeight();
+        }, 250);
+    });
+    
+    // Observar mudanças no body e em elementos importantes
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        characterData: true
+    });
+    
+    // Observar especificamente as tabs
+    document.querySelectorAll('.tab-pane').forEach(tab => {
+        observer.observe(tab, {
+            childList: true,
+            subtree: true,
+            attributes: true
+        });
+    });
+}
+
+// Função para garantir que o container tenha altura adequada
+function ajustarContainer() {
+    const mainContainer = document.querySelector('.main-container');
+    if (mainContainer) {
+        // Garantir que o container não limite a altura
+        mainContainer.style.overflow = 'visible';
+        mainContainer.style.height = 'auto';
+        mainContainer.style.minHeight = 'auto';
+    }
+    
+    // Ajustar todas as tabs
+    document.querySelectorAll('.tab-pane').forEach(tab => {
+        tab.style.overflow = 'visible';
+        tab.style.height = 'auto';
+        tab.style.minHeight = 'auto';
+    });
+    
+    // Ajustar containers de tabela
+    document.querySelectorAll('.table-container').forEach(container => {
+        container.style.overflow = 'visible';
+        container.style.height = 'auto';
+        container.style.minHeight = 'auto';
+    });
+}
+
+// ==================== INICIALIZAÇÃO CORRIGIDA ====================
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM carregado, inicializando...');
+    
+    // Ajustar containers
+    removeAllScrollIssues();
+    ajustarContainer();
+    
+    // Carregar dados
+    carregarTodosDados();
+    
+    // Atualizar data
+    updateDataAtualizacao();
+    setInterval(updateDataAtualizacao, 60000);
+    
+    // Observar mudanças para redimensionar iframe
+    observarMudancas();
+    
+    // Atualizar altura após carregar tudo
+    setTimeout(() => {
+        iframeUpdateHeight();
+    }, 500);
+    
+    // Atualizar ao mudar de tab
+    document.querySelectorAll('[data-bs-toggle="tab"]').forEach(button => {
+        button.addEventListener('shown.bs.tab', () => {
+            setTimeout(() => {
+                iframeUpdateHeight();
+            }, 300);
+        });
+    });
+});
+
+// Também atualizar após interações importantes
+window.addEventListener('load', () => {
+    console.log('Página completamente carregada');
+    setTimeout(iframeUpdateHeight, 500);
+});
+
+// Função de updateDataAtualizacao (já existente)
+function updateDataAtualizacao() { 
+    const now = new Date();
+    document.getElementById('data-atualizacao-central').textContent = now.toLocaleString('pt-BR');
+}
 
         // ==================== CARREGAMENTO ====================
         async function carregarTodosDados() {
