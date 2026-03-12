@@ -21,9 +21,7 @@ resources:
           type: texto
         - name: modalidade
           type: texto
-        - name: setor_programa
-          type: texto
-        - name: programa_beneficiario
+        - name: setor_programa_beneficiario
           type: number
         - name: valor
           type: number
