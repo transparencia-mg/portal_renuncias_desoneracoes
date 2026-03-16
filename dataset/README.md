@@ -6,9 +6,9 @@ Os dados são organizados em arquivos por tipo de renúncia e seguem um padrão 
 
 Saiba como contribuir com a documentação deste conjunto de dados!
 
-A documentação deste conjunto de dados está sendo feita de forma aberta e colaborativa no [Github](https://github.com/transparencia-mg/bens-tombados). Para enviar sua contribuição, por favor acesse:
+A documentação deste conjunto de dados está sendo feita de forma aberta e colaborativa no [Github](https://github.com/transparencia-mg/portal_renuncias_desoneracoes). Para enviar sua contribuição, por favor acesse:
 
-- [Pull requests](https://github.com/transparencia-mg/bens-tombados/pulls), no caso de sugerir uma alteração na documentação.
+- [Pull requests](https://github.com/transparencia-mg/portal_renuncias_desoneracoes/pulls), no caso de sugerir uma alteração na documentação.
 
 Todas as contribuições são bem vindas. Alguns exemplos são:
 
@@ -19,6 +19,6 @@ Todas as contribuições são bem vindas. Alguns exemplos são:
 
 Além disso, fique a vontade para utilizar os demais canais oficiais de atendimento do Poder Executivo Estadual:
 
-- [Fale Conosco](https://www.mg.gov.br/planejamento/pagina/atendimento/fale-conosco/fale-conosco): Dúvidas
+- [Fale Conosco](https://www.transparencia.mg.gov.br/pagina/fale-conosco-portal-da-transparencia): Dúvidas
 - [Manifestações de Ouvidoria](http://www.ouvidoriageral.mg.gov.br/): Denúncia, Reclamação, Crítica, Elogio ou Sugestões
 - [Pedido de Acesso à Informação](http://www.acessoainformacao.mg.gov.br/sistema/site/index.html): Acesso às informações dos órgãos e entidades estaduais que não estejam publicamente disponíveis.
