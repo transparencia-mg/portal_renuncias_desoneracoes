@@ -1,6 +1,6 @@
 {
   "version": "4.16.6",
-  "time": 0.086,
+  "time": 0.081,
   "errors": [],
   "tasks": [
     {
@@ -45,10 +45,10 @@
         "scheme": "file",
         "title": "Previsão Renúncias Novas",
         "stats": {
-          "hash": "4959fa93c4e0d479dbb75a58c1ddc875",
-          "bytes": 4701,
+          "hash": "ed699120d47737b079ff88f59ac2c93a",
+          "bytes": 6926,
           "fields": 6,
-          "rows": 59
+          "rows": 79
         }
       },
       "time": 0.011,
@@ -153,13 +153,13 @@
         "scheme": "file",
         "title": "Previsão Renúncias Pré Existentes",
         "stats": {
-          "hash": "58f7b7d96c2b601db62209b5f8521504",
-          "bytes": 9538,
+          "hash": "2a680e7905f2bfa746b8dd5fdce2e668",
+          "bytes": 11779,
           "fields": 14,
-          "rows": 84
+          "rows": 98
         }
       },
-      "time": 0.032,
+      "time": 0.02,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -235,7 +235,7 @@
           "rows": 63
         }
       },
-      "time": 0.014,
+      "time": 0.012,
       "scope": [
         "hash-count-error",
         "byte-count-error",
