@@ -1,6 +1,6 @@
 {
   "version": "4.16.6",
-  "time": 0.081,
+  "time": 0.09,
   "errors": [],
   "tasks": [
     {
@@ -51,7 +51,7 @@
           "rows": 79
         }
       },
-      "time": 0.011,
+      "time": 0.012,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -159,7 +159,7 @@
           "rows": 98
         }
       },
-      "time": 0.02,
+      "time": 0.023,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -229,13 +229,13 @@
         "scheme": "file",
         "title": "Renúncias Concedidas",
         "stats": {
-          "hash": "12fbb002938b7835924c88f712d35508",
-          "bytes": 7859,
+          "hash": "cf8759cdae4b3a27ec82bbf7028f0b21",
+          "bytes": 8095,
           "fields": 6,
-          "rows": 63
+          "rows": 66
         }
       },
-      "time": 0.012,
+      "time": 0.014,
       "scope": [
         "hash-count-error",
         "byte-count-error",
