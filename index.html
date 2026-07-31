@@ -657,6 +657,29 @@
         .sortable-th { cursor: pointer; user-select: none; white-space: nowrap; }
         .sortable-th:hover { text-decoration: underline; }
         .sort-icon { font-size: 11px; opacity: 0.7; }
+
+        /* ==================== BOTÕES (padrão de referência) ==================== */
+        .btn-pesquisa { background: linear-gradient(to right, #20445d, #20445d); border: none; padding: 0 16px; font-weight: 600; border-radius: 6px; transition: all 0.3s ease; font-size: 13px; color: white; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; height: 36px; white-space: nowrap; }
+        .btn-pesquisa:hover { background: linear-gradient(to right, var(--accent-red), #a32c32); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(185,60,66,0.2); color: white; }
+        .btn-secondary-custom { background: white; border: 2px solid var(--primary-darker); color: var(--primary-darker); padding: 0 16px; font-weight: 600; font-size: 13px; border-radius: 6px; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; height: 36px; white-space: nowrap; }
+        .btn-secondary-custom:hover { background-color: #132837 !important; color: white !important; border-color: #132837 !important; }
+
+        /* ==================== TOOLBAR / BUSCA ==================== */
+        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+        .toolbar-left, .toolbar-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .campo-busca { border: 1.5px solid #dfe5ec; border-radius: 8px; padding: 6px 12px; font-size: 12px; height: 32px; background: #fff; transition: all 0.2s ease; }
+        .campo-busca:focus { border-color: #1a3a5c; box-shadow: 0 0 0 2px rgba(26,58,92,0.1); outline: none; }
+
+        /* ==================== DICIONÁRIO DE DADOS ==================== */
+        .metadata-container { background: white; border-radius: 10px; box-shadow: 0 3px 12px rgba(0,0,0,0.06); overflow: hidden; margin-bottom: 20px; }
+        .metadata-header { background: #20445d; color: white; padding: 12px 16px; font-size: 13px; font-weight: 700; display: flex; align-items: center; }
+        .metadata-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .metadata-table thead th { background-color: #54697b !important; color: white !important; padding: 10px; font-size: 11px; text-transform: uppercase; font-weight: 600; }
+        .metadata-table tbody tr:nth-child(even) { background: #f8fafd; }
+        .metadata-table tbody td { padding: 10px; border-bottom: 1px solid #f0f4f8; vertical-align: top; color: #334155; }
+        .metadata-table code { background: #e2e8f0; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+        .dic-row-highlight { background: #fffbea !important; }
+        .badge-tipo-campo { background: #e2e8f0; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 600; color: #475569; }
         
         @media print {
             body { background: white; }
@@ -729,6 +752,7 @@
                                     <tr><th class="p-3">Tributo</th><th class="p-3 valor-monetario">Previsto (R$)</th><th class="p-3 valor-monetario">Concedido (R$)</th><th class="p-3 valor-monetario">Diferença (R$)</th></tr>
                                 </thead>
                                 <tbody id="tbodyComparativoTributos"></tbody>
+                                <tfoot id="tfootComparativoTributos"></tfoot>
                             </table>
                         </div>
                     </div>
@@ -743,15 +767,15 @@
                             <label class="filter-label">Ano</label>
                             <select class="form-select" id="anoPrevisao"></select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="filter-label">Tributo</label>
                             <select class="form-select" id="tributoPrevisao"></select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label class="filter-label">Modalidade</label>
                             <select class="form-select" id="modalidadePrevisao"></select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label class="filter-label">Tipo</label>
                             <select class="form-select" id="tipoPrevisao">
                                 <option value="">Todos</option>
@@ -759,23 +783,15 @@
                                 <option value="PRE-EXISTENTES">Pré-existentes</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="aglutinarRegionalizacao" checked>
-                                <label class="form-check-label filter-label mb-0" for="aglutinarRegionalizacao">Aglutinar (ignorar regionalização)</label>
-                            </div>
-                        </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-12 d-flex gap-2">
-                            <button class="btn-export" id="atualizarFiltrosPrevisao"><i class="material-icons">filter_alt</i> Atualizar Filtros</button>
-                            <button class="btn-export" id="limparFiltrosPrevisao" style="background:var(--secondary-teal);"><i class="material-icons">filter_alt_off</i> Limpar Filtros</button>
-                        </div>
+                    <div class="botoes-abaixo">
+                        <button class="btn-pesquisa" id="atualizarFiltrosPrevisao"><i class="material-icons">refresh</i> Atualizar Filtros</button>
+                        <button class="btn-secondary-custom" id="limparFiltrosPrevisao"><i class="material-icons">clear</i> Limpar Filtros</button>
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="d-flex gap-2">
+                <div class="toolbar">
+                    <div class="toolbar-left">
                         <button class="btn-export" id="exportCSVPrevisao"><i class="material-icons">description</i> CSV</button>
                         <button class="btn-export" onclick="imprimirTabela('tabelaPrevisao', 'Previsão de Renúncias')"><i class="material-icons">print</i> PDF</button>
                         <div class="share-dropdown">
@@ -789,7 +805,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex align-items-center gap-2 ms-auto">
+                    <div class="toolbar-right">
+                        <input type="text" id="buscaPrevisao" maxlength="60" placeholder="Buscar tributo, modalidade, norma..." class="campo-busca" style="width:260px;">
                         <div class="items-per-page" style="width:auto;"><select id="itemsPerPagePrevisao" style="border:none; background:transparent;"><option value="10">10</option><option value="25">25</option><option value="50" selected>50</option></select></div>
                         <span class="table-badge" id="countPrevisao">0 registros</span>
                     </div>
@@ -818,15 +835,13 @@
                         <div class="col-md-3"><label class="filter-label">Modalidade</label><select class="form-select" id="modalidadeConcedidas"></select></div>
                         <div class="col-md-3"><label class="filter-label">Tipo</label><select class="form-select" id="tipoConcedidas"><option value="">Todos</option><option value="NOVAS">Novas</option><option value="PRE-EXISTENTES">Pré-existentes</option><option value="BENEFÍCIOS FISCAIS HETERÔNOMOS">Heterônomos</option></select></div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-12 d-flex gap-2">
-                            <button class="btn-export" id="atualizarFiltrosConcedidas"><i class="material-icons">filter_alt</i> Atualizar Filtros</button>
-                            <button class="btn-export" id="limparFiltrosConcedidas" style="background:var(--secondary-teal);"><i class="material-icons">filter_alt_off</i> Limpar Filtros</button>
-                        </div>
+                    <div class="botoes-abaixo">
+                        <button class="btn-pesquisa" id="atualizarFiltrosConcedidas"><i class="material-icons">refresh</i> Atualizar Filtros</button>
+                        <button class="btn-secondary-custom" id="limparFiltrosConcedidas"><i class="material-icons">clear</i> Limpar Filtros</button>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="d-flex gap-2">
+                <div class="toolbar">
+                    <div class="toolbar-left">
                         <button class="btn-export" id="exportCSVConcedidas"><i class="material-icons">description</i> CSV</button>
                         <button class="btn-export" onclick="imprimirTabela('tabelaConcedidas', 'Renúncias Concedidas')"><i class="material-icons">print</i> PDF</button>
                         <div class="share-dropdown">
@@ -840,7 +855,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex align-items-center gap-2 ms-auto">
+                    <div class="toolbar-right">
+                        <input type="text" id="buscaConcedidas" maxlength="60" placeholder="Buscar tributo, modalidade, norma..." class="campo-busca" style="width:260px;">
                         <div class="items-per-page" style="width:auto;"><select id="itemsPerPageConcedidas" style="border:none; background:transparent;"><option value="10">10</option><option value="25">25</option><option value="50" selected>50</option></select></div>
                         <span class="table-badge" id="countConcedidas">0 registros</span>
                     </div>
@@ -869,48 +885,58 @@
 
             <!-- ========== DICIONÁRIO DE DADOS ========== -->
             <div class="tab-pane fade" id="dicionario">
-                <div class="table-container">
-                    <div class="p-4">
-                        <div class="mb-3">
-                            <h5 class="mb-4 fw-bold" style="color: var(--primary-dark);"><span class="material-icons me-2">receipt</span>Estrutura dos Dados de Renúncias Concedidas</h5>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover">
-                                    <thead style="background-color: var(--primary-dark); color: white;">
-                                        <tr><th class="p-3">Campo</th><th class="p-3">Descrição</th><th class="p-3">Tipo</th></tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>ano</td><td>Ano de referência da renúncia fiscal</td><td>Número (YYYY)</td></tr>
-                                        <tr><td>tipo</td><td>Classificação da renúncia</td><td>Texto</td></tr>
-                                        <tr><td>tributo</td><td>Tributo ao qual a renúncia se refere</td><td>Texto</td></tr>
-                                        <tr><td>modalidade</td><td>Modalidade da renúncia</td><td>Texto</td></tr>
-                                        <tr><td>norma_autorizada</td><td>Norma legal que autoriza a renúncia</td><td>Texto</td></tr>
-                                        <tr><td>montante_perdas</td><td>Valor da renúncia fiscal em Reais (R$)</td><td>Número Decimal</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="mt-5">
-                            <h5 class="mb-4 fw-bold" style="color: var(--primary-dark);"><span class="material-icons me-2">show_chart</span>Estrutura dos Dados de Previsão de Renúncias</h5>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover">
-                                    <thead style="background-color: var(--primary-dark); color: white;">
-                                        <tr><th class="p-3">Campo</th><th class="p-3">Descrição</th><th class="p-3">Tipo</th></tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td>ano</td><td>Ano de referência da previsão</td><td>Número (YYYY)</td></tr>
-                                        <tr><td>tipo</td><td>Classificação da previsão (Novas ou Pré-existentes)</td><td>Texto</td></tr>
-                                        <tr><td>regionalizacao</td><td>Regional/município a que a previsão se refere</td><td>Texto</td></tr>
-                                        <tr><td>norma_autorizadora</td><td>Norma legal que autoriza a renúncia prevista</td><td>Texto</td></tr>
-                                        <tr><td>[tributo]_[modalidade]</td><td>Colunas largas por tributo e modalidade (ex.: icms_isencao), convertidas no painel em campos "tributo" e "modalidade"</td><td>Número Decimal</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="mt-4" style="font-size:14px; background:#f8f9fa; padding:15px; border-radius:5px;">
-                            <p class="mb-1"><strong>Fonte:</strong> Dados do Armazém Cognos e SAS - SAIF/DIEF; SICAF/MG - SUCRED</p>
-                            <p class="mb-0"><strong>Elaboração:</strong> DIEF/SAIF/SEF-MG</p>
-                        </div>
+                <div class="filter-container">
+                    <div>
+                        <h5 style="font-size:15px;font-weight:700;color:#20445d;margin:0;">Dicionário de Dados</h5>
+                        <p style="color:#6c757d;font-size:12px;margin:0;">Descrição de todas as colunas dos conjuntos de dados de Renúncias de Receitas</p>
                     </div>
+                    <div style="margin-top:14px;">
+                        <input type="text" id="dicBusca" class="campo-busca" style="max-width:320px; width:100%;" placeholder="Buscar campo ou descrição..." oninput="buscarDicionario(this.value)">
+                    </div>
+                </div>
+
+                <div class="metadata-container">
+                    <div class="metadata-header">
+                        <i class="material-icons" style="margin-right:8px;">table_chart</i>renuncias_concedidas.csv
+                        <span style="margin-left:8px;background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:10px;font-size:11px;">6 campos</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="metadata-table">
+                            <thead><tr><th>Campo</th><th>Descrição</th><th>Tipo</th></tr></thead>
+                            <tbody>
+                                <tr class="dic-linha"><td><code>ano</code></td><td>Ano de referência da renúncia fiscal</td><td><span class="badge-tipo-campo">Número (YYYY)</span></td></tr>
+                                <tr class="dic-linha"><td><code>tipo</code></td><td>Classificação da renúncia (Novas, Pré-existentes ou Benefícios Fiscais Heterônomos)</td><td><span class="badge-tipo-campo">Texto</span></td></tr>
+                                <tr class="dic-linha"><td><code>tributo</code></td><td>Tributo ao qual a renúncia se refere (ICMS, IPVA, ITCD, Taxa)</td><td><span class="badge-tipo-campo">Texto</span></td></tr>
+                                <tr class="dic-linha"><td><code>modalidade</code></td><td>Modalidade da renúncia (ex.: Isenção, Anistia, Crédito Presumido)</td><td><span class="badge-tipo-campo">Texto</span></td></tr>
+                                <tr class="dic-linha"><td><code>norma_autorizada</code></td><td>Norma legal que autoriza a renúncia</td><td><span class="badge-tipo-campo">Texto</span></td></tr>
+                                <tr class="dic-linha"><td><code>montante_perdas</code></td><td>Valor da renúncia fiscal em Reais (R$)</td><td><span class="badge-tipo-campo">Número Decimal</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="metadata-container">
+                    <div class="metadata-header">
+                        <i class="material-icons" style="margin-right:8px;">table_chart</i>previsao_renuncias.csv
+                        <span style="margin-left:8px;background:rgba(255,255,255,0.2);padding:2px 10px;border-radius:10px;font-size:11px;">5 campos</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="metadata-table">
+                            <thead><tr><th>Campo</th><th>Descrição</th><th>Tipo</th></tr></thead>
+                            <tbody>
+                                <tr class="dic-linha"><td><code>ano</code></td><td>Ano de referência da previsão</td><td><span class="badge-tipo-campo">Número (YYYY)</span></td></tr>
+                                <tr class="dic-linha"><td><code>tipo</code></td><td>Classificação da previsão (Novas ou Pré-existentes)</td><td><span class="badge-tipo-campo">Texto</span></td></tr>
+                                <tr class="dic-linha"><td><code>regionalizacao</code></td><td>Regional/município a que a previsão se refere (aglutinado no painel, ignorando a regionalização)</td><td><span class="badge-tipo-campo">Texto</span></td></tr>
+                                <tr class="dic-linha"><td><code>norma_autorizadora</code></td><td>Norma legal que autoriza a renúncia prevista</td><td><span class="badge-tipo-campo">Texto</span></td></tr>
+                                <tr class="dic-linha"><td><code>[tributo]_[modalidade]</code></td><td>Colunas largas por tributo e modalidade (ex.: icms_isencao), convertidas no painel nos campos "tributo" e "modalidade"</td><td><span class="badge-tipo-campo">Número Decimal</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="filter-container" style="font-size:14px;">
+                    <p class="mb-1"><strong>Fonte:</strong> Dados do Armazém Cognos e SAS - SAIF/DIEF; SICAF/MG - SUCRED</p>
+                    <p class="mb-0"><strong>Elaboração:</strong> DIEF/SAIF/SEF-MG</p>
                 </div>
             </div>
 
@@ -1077,6 +1103,15 @@ async function updateDataAtualizacao() {
     window.compartilharLinkedIn = function(e) { e.preventDefault(); window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank'); document.querySelectorAll('.share-options').forEach(m => m.classList.remove('show')); };
     window.compartilharWhatsApp = function(e) { e.preventDefault(); window.open(`https://wa.me/?text=${encodeURIComponent('Renúncias de Receitas - MG: ' + window.location.href)}`, '_blank'); document.querySelectorAll('.share-options').forEach(m => m.classList.remove('show')); };
     
+    window.buscarDicionario = function(termo) {
+        const t = (termo || '').toLowerCase().trim();
+        document.querySelectorAll('.dic-linha').forEach(row => {
+            const match = !t || row.textContent.toLowerCase().includes(t);
+            row.style.display = match ? '' : 'none';
+            row.classList.toggle('dic-row-highlight', !!t && match);
+        });
+    };
+
     window.baixarArquivo = function(nomeArquivo) {
         const urls = {
             'renuncias_concedidas.csv': 'https://raw.githubusercontent.com/transparencia-mg/renuncias/main/dataset/data/renuncias_concedidas.csv',
@@ -1159,9 +1194,11 @@ async function updateDataAtualizacao() {
             document.getElementById('tributoConcedidas').value = '';
             document.getElementById('modalidadeConcedidas').value = '';
             document.getElementById('tipoConcedidas').value = '';
+            document.getElementById('buscaConcedidas').value = '';
             sortState.concedidas = { field: null, dir: 1 };
             filtrarConcedidas();
         });
+        document.getElementById('buscaConcedidas').addEventListener('input', filtrarConcedidas);
 
         // ---- Previsão de Renúncias: filtros aplicados manualmente ----
         document.getElementById('itemsPerPagePrevisao').addEventListener('change', (e) => { itemsPerPage.previsao = parseInt(e.target.value); currentPage.previsao = 1; atualizarTabelaPrevisao(); });
@@ -1172,10 +1209,11 @@ async function updateDataAtualizacao() {
             document.getElementById('tributoPrevisao').value = '';
             document.getElementById('modalidadePrevisao').value = '';
             document.getElementById('tipoPrevisao').value = '';
-            document.getElementById('aglutinarRegionalizacao').checked = true;
+            document.getElementById('buscaPrevisao').value = '';
             sortState.previsao = { field: null, dir: 1 };
             filtrarPrevisao();
         });
+        document.getElementById('buscaPrevisao').addEventListener('input', filtrarPrevisao);
 
         // ---- Ordenação por clique no cabeçalho (delegação de evento) ----
         document.addEventListener('click', (e) => {
@@ -1237,13 +1275,19 @@ async function updateDataAtualizacao() {
         if (!anoVisaoGeralSelecionado) return;
         document.getElementById('anoComparativoTributos').textContent = `- ${anoVisaoGeralSelecionado}`;
         const tributosComparar = ['ICMS', 'IPVA', 'ITCD'];
+        let totalPrevisto = 0, totalConcedido = 0;
         document.getElementById('tbodyComparativoTributos').innerHTML = tributosComparar.map(trib => {
             const previsto = dadosPrevisao.filter(d => d.ano == anoVisaoGeralSelecionado && d.tributo === trib).reduce((s, d) => s + d.valor, 0);
             const concedido = dadosConcedidas.filter(d => d.ano == anoVisaoGeralSelecionado && d.tributo === trib).reduce((s, d) => s + d.valor, 0);
+            totalPrevisto += previsto;
+            totalConcedido += concedido;
             const diff = concedido - previsto;
             const corDiff = diff >= 0 ? 'var(--accent-red)' : 'var(--success-green)';
             return `<tr><td class="fw-bold">${trib}</td><td class="valor-monetario">${formatarMoeda(previsto)}</td><td class="valor-monetario">${formatarMoeda(concedido)}</td><td class="valor-monetario" style="color:${corDiff};">${formatarMoeda(diff)}</td></tr>`;
         }).join('');
+        const diffTotal = totalConcedido - totalPrevisto;
+        const corDiffTotal = diffTotal >= 0 ? 'var(--accent-red)' : 'var(--success-green)';
+        document.getElementById('tfootComparativoTributos').innerHTML = `<tr class="table-total-row"><td>TOTAL</td><td class="valor-monetario">${formatarMoeda(totalPrevisto)}</td><td class="valor-monetario">${formatarMoeda(totalConcedido)}</td><td class="valor-monetario" style="color:${corDiffTotal};">${formatarMoeda(diffTotal)}</td></tr>`;
     }
 
     function atualizarGraficos() {
@@ -1281,15 +1325,23 @@ async function updateDataAtualizacao() {
             (!tipo || d.tipo === tipo)
         );
 
-        const aglutinar = document.getElementById('aglutinarRegionalizacao').checked;
-        if (aglutinar) {
-            const grupos = {};
-            dados.forEach(d => {
-                const chave = [d.ano, d.tributo, d.modalidade, d.norma, d.tipo].join('|');
-                if (!grupos[chave]) grupos[chave] = { ano: d.ano, tributo: d.tributo, modalidade: d.modalidade, norma: d.norma, tipo: d.tipo, valor: 0 };
-                grupos[chave].valor += d.valor;
-            });
-            dados = Object.values(grupos);
+        // Sempre aglutina os dados, ignorando a regionalização.
+        const grupos = {};
+        dados.forEach(d => {
+            const chave = [d.ano, d.tributo, d.modalidade, d.norma, d.tipo].join('|');
+            if (!grupos[chave]) grupos[chave] = { ano: d.ano, tributo: d.tributo, modalidade: d.modalidade, norma: d.norma, tipo: d.tipo, valor: 0 };
+            grupos[chave].valor += d.valor;
+        });
+        dados = Object.values(grupos);
+
+        const termo = (document.getElementById('buscaPrevisao').value || '').toLowerCase().trim();
+        if (termo) {
+            dados = dados.filter(d =>
+                String(d.tributo || '').toLowerCase().includes(termo) ||
+                String(d.modalidade || '').toLowerCase().includes(termo) ||
+                String(d.norma || '').toLowerCase().includes(termo) ||
+                String(d.tipo || '').toLowerCase().includes(termo)
+            );
         }
 
         if (sortState.previsao.field) {
@@ -1303,10 +1355,7 @@ async function updateDataAtualizacao() {
     }
 
     function atualizarTabelaPrevisao() {
-        const aglutinar = document.getElementById('aglutinarRegionalizacao').checked;
-        document.getElementById('theadPrevisao').innerHTML = aglutinar
-            ? '<tr><th class="sortable-th" data-table="previsao" data-field="ano">Ano <span class="sort-icon" id="sortIcon-previsao-ano"></span></th><th class="sortable-th" data-table="previsao" data-field="tributo">Tributo <span class="sort-icon" id="sortIcon-previsao-tributo"></span></th><th class="sortable-th" data-table="previsao" data-field="modalidade">Modalidade <span class="sort-icon" id="sortIcon-previsao-modalidade"></span></th><th class="sortable-th" data-table="previsao" data-field="norma">Norma Autorizadora <span class="sort-icon" id="sortIcon-previsao-norma"></span></th><th class="sortable-th" data-table="previsao" data-field="tipo">Tipo <span class="sort-icon" id="sortIcon-previsao-tipo"></span></th><th class="sortable-th valor-monetario" data-table="previsao" data-field="valor">Valor (R$) <span class="sort-icon" id="sortIcon-previsao-valor"></span></th></tr>'
-            : '<tr><th class="sortable-th" data-table="previsao" data-field="ano">Ano <span class="sort-icon" id="sortIcon-previsao-ano"></span></th><th class="sortable-th" data-table="previsao" data-field="regionalizacao">Regional <span class="sort-icon" id="sortIcon-previsao-regionalizacao"></span></th><th class="sortable-th" data-table="previsao" data-field="tributo">Tributo <span class="sort-icon" id="sortIcon-previsao-tributo"></span></th><th class="sortable-th" data-table="previsao" data-field="modalidade">Modalidade <span class="sort-icon" id="sortIcon-previsao-modalidade"></span></th><th class="sortable-th" data-table="previsao" data-field="norma">Norma Autorizadora <span class="sort-icon" id="sortIcon-previsao-norma"></span></th><th class="sortable-th" data-table="previsao" data-field="tipo">Tipo <span class="sort-icon" id="sortIcon-previsao-tipo"></span></th><th class="sortable-th valor-monetario" data-table="previsao" data-field="valor">Valor (R$) <span class="sort-icon" id="sortIcon-previsao-valor"></span></th></tr>';
+        document.getElementById('theadPrevisao').innerHTML = '<tr><th class="sortable-th" data-table="previsao" data-field="ano">Ano <span class="sort-icon" id="sortIcon-previsao-ano"></span></th><th class="sortable-th" data-table="previsao" data-field="tributo">Tributo <span class="sort-icon" id="sortIcon-previsao-tributo"></span></th><th class="sortable-th" data-table="previsao" data-field="modalidade">Modalidade <span class="sort-icon" id="sortIcon-previsao-modalidade"></span></th><th class="sortable-th" data-table="previsao" data-field="norma">Norma Autorizadora <span class="sort-icon" id="sortIcon-previsao-norma"></span></th><th class="sortable-th" data-table="previsao" data-field="tipo">Tipo <span class="sort-icon" id="sortIcon-previsao-tipo"></span></th><th class="sortable-th valor-monetario" data-table="previsao" data-field="valor">Valor (R$) <span class="sort-icon" id="sortIcon-previsao-valor"></span></th></tr>';
 
         const total = filteredPrevisao.length;
         const start = (currentPage.previsao - 1) * itemsPerPage.previsao;
@@ -1317,14 +1366,11 @@ async function updateDataAtualizacao() {
             const tagClass = d.tipo === 'NOVA' ? 'tag-novas' : 'tag-pre';
             const tipoLabel = d.tipo === 'NOVA' ? 'NOVAS' : d.tipo;
             const tagHtml = `<span class="${tagClass}">${tipoLabel}</span>`;
-            return aglutinar
-                ? `<tr><td>${d.ano}</td><td>${d.tributo}</td><td>${d.modalidade}</td><td>${d.norma || '-'}</td><td>${tagHtml}</td><td class="valor-monetario">${formatarMoeda(d.valor)}</td></tr>`
-                : `<tr><td>${d.ano}</td><td>${d.regionalizacao || '-'}</td><td>${d.tributo}</td><td>${d.modalidade}</td><td>${d.norma || '-'}</td><td>${tagHtml}</td><td class="valor-monetario">${formatarMoeda(d.valor)}</td></tr>`;
+            return `<tr><td>${d.ano}</td><td>${d.tributo}</td><td>${d.modalidade}</td><td>${d.norma || '-'}</td><td>${tagHtml}</td><td class="valor-monetario">${formatarMoeda(d.valor)}</td></tr>`;
         }).join('');
 
         const totalValor = filteredPrevisao.reduce((s, d) => s + d.valor, 0);
-        const colspan = aglutinar ? 5 : 6;
-        document.getElementById('tfootPrevisao').innerHTML = `<tr class="table-total-row"><td colspan="${colspan}" class="text-end">TOTAL:</td><td class="valor-monetario">${formatarMoeda(totalValor)}</td></tr>`;
+        document.getElementById('tfootPrevisao').innerHTML = `<tr class="table-total-row"><td colspan="5" class="text-end">TOTAL:</td><td class="valor-monetario">${formatarMoeda(totalValor)}</td></tr>`;
         document.getElementById('countPrevisao').textContent = `${total} registros`;
         document.getElementById('paginationInfoPrevisao').textContent = total ? `Mostrando ${start + 1}-${end} de ${total}` : 'Nenhum registro encontrado';
         const totalPages = Math.ceil(total / itemsPerPage.previsao) || 1;
@@ -1360,6 +1406,17 @@ async function updateDataAtualizacao() {
         const modalidade = document.getElementById('modalidadeConcedidas').value;
         const tipo = document.getElementById('tipoConcedidas').value;
         let dados = dadosConcedidas.filter(d => (d.ano == ano) && (!tributo || d.tributo === tributo) && (!modalidade || d.modalidade === modalidade) && (!tipo || d.tipo === tipo));
+
+        const termo = (document.getElementById('buscaConcedidas').value || '').toLowerCase().trim();
+        if (termo) {
+            dados = dados.filter(d =>
+                String(d.tributo || '').toLowerCase().includes(termo) ||
+                String(d.modalidade || '').toLowerCase().includes(termo) ||
+                String(d.norma || '').toLowerCase().includes(termo) ||
+                String(d.tipo || '').toLowerCase().includes(termo)
+            );
+        }
+
         if (sortState.concedidas.field) dados.sort((a, b) => sortState.concedidas.dir * compararValores(a, b, sortState.concedidas.field));
         filteredConcedidas = dados;
         currentPage.concedidas = 1;
